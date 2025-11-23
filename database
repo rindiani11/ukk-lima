@@ -1,0 +1,36 @@
+CREATE TABLE `barang` (
+  `id` int NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `jumlah` int NOT NULL,
+  `jumlah_tersedia` int NOT NULL,
+  `lokasi` varchar(50) NOT NULL,
+  `kode` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+
+
+  CREATE TABLE `transaksi` (
+  `id` int NOT NULL,
+  `id_barang` int NOT NULL,
+  `peminjam` varchar(50) NOT NULL,
+  `jumlah` int NOT NULL,
+  `kategori` enum('pinjam','kembali') NOT NULL,
+  `tanggal` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `catatan` text NOT NULL
+)
+
+
+  CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `fullname` varchar(50) NOT NULL,
+  `password` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `role` enum('admin','superadmin') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'admin'
+)
+
+
+  ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
